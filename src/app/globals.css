@@ -1,0 +1,669 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Cairo font - locally hosted for reliability */
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/cairo-300.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/cairo-400.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/cairo-500.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/cairo-600.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/cairo-700.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/cairo-800.ttf') format('truetype');
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: 'Cairo', 'Segoe UI', Tahoma, system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+}
+
+:root {
+  /* Base radius — kept at 0.75rem for consistency, with 2xl available for premium surfaces */
+  --radius: 0.75rem;
+
+  /* ── Refined emerald-based premium palette ──
+     - Background: very soft off-white with a hint of warmth
+     - Neutrals: refined slate (warmer undertone, not pure gray)
+     - Primary: deep emerald (#065f46 → #047857) — richer, more sophisticated
+     - Accent/Secondary: warm amber/gold (#d97706 / #f59e0b) for premium highlights, CTAs, ratings
+  */
+  --background: #f7faf8;
+  --foreground: #14272d;
+
+  --card: #ffffff;
+  --card-foreground: #14272d;
+
+  --popover: #ffffff;
+  --popover-foreground: #14272d;
+
+  /* Primary — refined deep emerald */
+  --primary: #047857;
+  --primary-deep: #065f46;
+  --primary-foreground: #ffffff;
+
+  /* Secondary — soft emerald tint */
+  --secondary: #ecfdf5;
+  --secondary-foreground: #065f46;
+
+  /* Warm accent — amber / gold for premium highlights */
+  --accent: #d97706;
+  --accent-soft: #fef3c7;
+  --accent-foreground: #92400e;
+
+  /* Neutrals — warmer slate undertones */
+  --muted: #f1f5f4;
+  --muted-foreground: #5b6f73;
+
+  --destructive: #dc2626;
+
+  --border: #e2ebe8;
+  --input: #e2ebe8;
+  --ring: #047857;
+
+  /* Charts palette — refined emerald + amber + plum */
+  --chart-1: #047857;
+  --chart-2: #d97706;
+  --chart-3: #7c3aed;
+  --chart-4: #db2777;
+  --chart-5: #0891b2;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #14272d;
+  --sidebar-primary: #047857;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #ecfdf5;
+  --sidebar-accent-foreground: #065f46;
+  --sidebar-border: #e2ebe8;
+  --sidebar-ring: #047857;
+
+  /* ── Premium shadow tokens ──
+     Soft, layered shadows with emerald-tinted undertones for premium depth.
+     Avoids harsh black; uses low-opacity dark teal for natural elevation.
+  */
+  --shadow-xs: 0 1px 2px rgba(20, 39, 45, 0.04);
+  --shadow-sm: 0 1px 2px rgba(20, 39, 45, 0.04), 0 1px 3px rgba(20, 39, 45, 0.05);
+  --shadow-md: 0 1px 2px rgba(20, 39, 45, 0.04), 0 4px 12px rgba(20, 39, 45, 0.06);
+  --shadow-lg: 0 1px 3px rgba(20, 39, 45, 0.04), 0 8px 24px rgba(20, 39, 45, 0.08);
+  --shadow-xl: 0 2px 6px rgba(20, 39, 45, 0.05), 0 14px 36px rgba(20, 39, 45, 0.10);
+  --shadow-emerald: 0 4px 14px rgba(4, 120, 87, 0.18), 0 2px 6px rgba(4, 120, 87, 0.08);
+  --shadow-amber: 0 4px 14px rgba(217, 119, 6, 0.18), 0 2px 6px rgba(217, 119, 6, 0.08);
+  --shadow-ring-emerald: 0 0 0 4px rgba(4, 120, 87, 0.10);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    /* Refined text rendering for premium feel */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+/* ── Refined custom scrollbar ──
+   Slimmer, with emerald-tinted thumb and hover state.
+   Width bumped slightly for premium feel (8px) and a soft track.
+*/
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track {
+  background: rgba(226, 235, 232, 0.35);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #b6cdc7, #9bb5b0);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #047857, #065f46);
+  background-clip: content-box;
+}
+
+/* Smooth page transitions */
+.page-transition {
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Card hover with lift */
+.job-card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.job-card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 1px 3px rgba(20, 39, 45, 0.04), 0 12px 32px -6px rgba(4, 120, 87, 0.14), 0 4px 12px -4px rgba(0, 0, 0, 0.05);
+}
+
+/* ── Gradient text — refined premium emerald with subtle depth ──
+   Uses deep emerald → mid emerald → teal for a richer feel.
+*/
+.gradient-text {
+  background: linear-gradient(135deg, #065f46 0%, #047857 45%, #0d9488 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Step indicator styles */
+.step-active {
+  background: linear-gradient(135deg, #047857, #065f46);
+  color: white;
+  box-shadow: 0 4px 12px rgba(4, 120, 87, 0.3);
+}
+.step-completed {
+  background-color: #047857;
+  color: white;
+}
+.step-pending {
+  background-color: #e2ebe8;
+  color: #9bb5b0;
+}
+
+/* Professional shimmer loading */
+.shimmer {
+  background: linear-gradient(90deg, #f1f5f4 25%, #e2ebe8 50%, #f1f5f4 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Glass morphism */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-dark {
+  background: rgba(4, 120, 87, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Subtle pulse for notifications */
+.pulse-dot {
+  animation: pulseDot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Professional badge styles */
+.badge-pro {
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+/* Stat card hover — refined with colored ring + lift */
+.stat-card {
+  transition: all 0.2s ease;
+}
+.stat-card:hover {
+  border-color: #047857;
+  box-shadow: 0 1px 3px rgba(20, 39, 45, 0.04), 0 0 0 3px rgba(4, 120, 87, 0.08);
+}
+
+/* Professional table styling — refined header + zebra rows + hover highlight */
+.table-professional th {
+  font-weight: 600;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #5b6f73;
+  background: linear-gradient(180deg, #f7faf8, #f1f5f4);
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+}
+.table-professional tbody tr:nth-child(even) {
+  background-color: rgba(241, 245, 244, 0.55);
+}
+.table-professional tbody tr:hover {
+  background-color: rgba(236, 253, 245, 0.55) !important;
+}
+.table-professional tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+/* Smooth focus ring */
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.1);
+}
+
+/* Counter animation */
+.counter-value {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Section divider */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(to left, transparent, #e2ebe8, transparent);
+}
+
+/* Trust badge */
+.trust-badge {
+  transition: all 0.2s ease;
+}
+.trust-badge:hover {
+  transform: scale(1.05);
+}
+
+/* Floating label input */
+.input-pro {
+  transition: all 0.2s ease;
+  border: 1.5px solid #e2ebe8;
+}
+.input-pro:focus {
+  border-color: #047857;
+  box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.08);
+}
+
+/* Professional button styles */
+.btn-primary {
+  background: linear-gradient(135deg, #047857, #059669);
+  transition: all 0.2s ease;
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #065f46, #047857);
+  box-shadow: 0 4px 12px rgba(4, 120, 87, 0.3);
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Fade in stagger for lists */
+.stagger-item {
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* Dashboard sidebar link */
+.sidebar-link {
+  transition: all 0.15s ease;
+  border-radius: 0.5rem;
+}
+.sidebar-link:hover {
+  background-color: #ecfdf5;
+  color: #047857;
+}
+.sidebar-link.active {
+  background-color: #ecfdf5;
+  color: #047857;
+  font-weight: 600;
+}
+
+/* ════════════════════════════════════════════════════════════
+   PREMIUM UTILITY CLASSES — refined for SaaS-grade polish
+════════════════════════════════════════════════════════════ */
+
+/* ── .card-premium — layered shadow + subtle gradient ring + hover lift ──
+   Use on hero cards, primary content cards that need to feel elevated.
+*/
+.card-premium {
+  background: #ffffff;
+  border: 1px solid rgba(226, 235, 232, 0.85);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    0 1px 2px rgba(20, 39, 45, 0.04),
+    0 4px 16px rgba(20, 39, 45, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+.card-premium:hover {
+  transform: translateY(-2px);
+  border-color: rgba(4, 120, 87, 0.25);
+  box-shadow:
+    0 1px 3px rgba(20, 39, 45, 0.04),
+    0 8px 28px -8px rgba(4, 120, 87, 0.18),
+    0 4px 12px -4px rgba(20, 39, 45, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* ── .stat-card-pro — premium stat card with gradient icon bg, refined lift ──
+   Layered shadow + subtle inner ring; pairs with .stat-icon-* helper classes.
+*/
+.stat-card-pro {
+  background: linear-gradient(180deg, #ffffff 0%, #fcfdfb 100%);
+  border: 1px solid rgba(226, 235, 232, 0.9);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    0 1px 2px rgba(20, 39, 45, 0.04),
+    0 4px 16px rgba(20, 39, 45, 0.05);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.stat-card-pro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle at top right, rgba(4, 120, 87, 0.05), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.stat-card-pro:hover {
+  transform: translateY(-3px);
+  border-color: rgba(4, 120, 87, 0.3);
+  box-shadow:
+    0 1px 3px rgba(20, 39, 45, 0.04),
+    0 12px 28px -8px rgba(4, 120, 87, 0.18),
+    0 0 0 1px rgba(4, 120, 87, 0.06);
+}
+.stat-card-pro:hover::before {
+  opacity: 1;
+}
+
+/* Icon-background helpers for stat-card-pro */
+.stat-icon-emerald {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  color: #047857;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.stat-icon-amber {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #b45309;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.stat-icon-plum {
+  background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+  color: #6d28d9;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.stat-icon-teal {
+  background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%);
+  color: #0f766e;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.stat-icon-rose {
+  background: linear-gradient(135deg, #ffe4e6 0%, #fecdd3 100%);
+  color: #be123c;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.stat-icon-sky {
+  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+  color: #0369a1;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.stat-icon-slate {
+  background: linear-gradient(135deg, #f1f5f4 0%, #e2ebe8 100%);
+  color: #475569;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* ── .glass-premium — frosted glass with subtle emerald tint ──
+   For overlays on hero sections / premium badges.
+*/
+.glass-premium {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 4px 16px rgba(20, 39, 45, 0.06);
+}
+
+/* ── .gradient-mesh — subtle mesh gradient for hero backgrounds ──
+   Layered radial gradients producing a soft, premium aurora feel.
+   Pairs well over a solid emerald base color.
+*/
+.gradient-mesh {
+  background-color: #065f46;
+  background-image:
+    radial-gradient(at 12% 18%, rgba(4, 120, 87, 0.95) 0px, transparent 50%),
+    radial-gradient(at 88% 12%, rgba(13, 148, 136, 0.55) 0px, transparent 50%),
+    radial-gradient(at 78% 92%, rgba(6, 95, 70, 0.85) 0px, transparent 55%),
+    radial-gradient(at 18% 88%, rgba(217, 119, 6, 0.20) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.30) 0px, transparent 60%);
+}
+
+/* ── .shimmer-pro — premium skeleton shimmer ──
+   Softer, slower, with a hint of emerald tint.
+*/
+.shimmer-pro {
+  background: linear-gradient(
+    90deg,
+    rgba(241, 245, 244, 0.6) 0%,
+    rgba(226, 235, 232, 0.7) 20%,
+    rgba(236, 253, 245, 0.85) 40%,
+    rgba(226, 235, 232, 0.7) 60%,
+    rgba(241, 245, 244, 0.6) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-pro 1.8s ease-in-out infinite;
+  border-radius: 0.5rem;
+}
+@keyframes shimmer-pro {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── .badge-premium — refined badge with subtle border + soft bg ──
+   Used for status pills, contract types, ratings, role tags.
+*/
+.badge-premium {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 0.18rem 0.6rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 1px 1px rgba(20, 39, 45, 0.03);
+}
+
+/* ── .section-accent-bar — small vertical accent bar before section title ──
+   Produces the "▎ إدارة المستخدمين" premium hierarchy look.
+   Wrap inline before an <h3>/<h2> with the title text after it.
+*/
+.section-accent-bar {
+  display: inline-block;
+  width: 4px;
+  height: 1.15em;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #047857, #0d9488);
+  margin-left: 0.55rem;
+  vertical-align: -2px;
+  box-shadow: 0 0 6px rgba(4, 120, 87, 0.35);
+}
+
+/* ── .hero-aurora — premium animated aurora glow for hero overlays ── */
+.hero-aurora {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(40% 50% at 20% 30%, rgba(13, 148, 136, 0.35) 0%, transparent 70%),
+    radial-gradient(35% 45% at 85% 15%, rgba(245, 158, 11, 0.18) 0%, transparent 70%),
+    radial-gradient(50% 50% at 70% 85%, rgba(4, 120, 87, 0.30) 0%, transparent 70%);
+  filter: blur(20px);
+  opacity: 0.85;
+}
+
+/* ── .quick-action-card — premium quick-action card with gradient icon circle + arrow ── */
+.quick-action-card {
+  background: #ffffff;
+  border: 1px solid rgba(226, 235, 232, 0.9);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 1px 2px rgba(20, 39, 45, 0.04), 0 4px 12px rgba(20, 39, 45, 0.04);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+.quick-action-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(4, 120, 87, 0.35);
+  box-shadow: 0 1px 3px rgba(20, 39, 45, 0.04), 0 12px 24px -6px rgba(4, 120, 87, 0.16);
+}
+.quick-action-card:hover .quick-action-arrow {
+  transform: translateX(-4px);
+  color: #047857;
+}
+
+.quick-action-icon {
+  background: linear-gradient(135deg, #047857, #0d9488);
+  color: #ffffff;
+  box-shadow: 0 6px 14px rgba(4, 120, 87, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.quick-action-arrow {
+  transition: all 0.2s ease;
+  color: #9bb5b0;
+}
+
+/* ── .premium-number — large bold tabular number for stat cards / counters ── */
+.premium-number {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+  letter-spacing: -0.02em;
+}
+
+/* ── .trend-up / .trend-down — small trend chips for stat cards ── */
+.trend-up {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #047857;
+  background: rgba(209, 250, 229, 0.6);
+  padding: 0.05rem 0.4rem;
+  border-radius: 9999px;
+}
+.trend-down {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #b91c1c;
+  background: rgba(254, 226, 226, 0.6);
+  padding: 0.05rem 0.4rem;
+  border-radius: 9999px;
+}
+.trend-neutral {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #5b6f73;
+  background: rgba(241, 245, 244, 0.8);
+  padding: 0.05rem 0.4rem;
+  border-radius: 9999px;
+}
+
+/* ── .empty-state-circle — soft circle behind empty-state icons ── */
+.empty-state-circle {
+  background: radial-gradient(circle at 30% 30%, #ecfdf5 0%, #d1fae5 100%);
+  border: 1px solid rgba(4, 120, 87, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 4px 12px rgba(4, 120, 87, 0.06);
+}
+
+/* ── .scroll-shadow — applied on sticky header on scroll (via JS class toggle) ── */
+.header-scrolled {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  box-shadow: 0 1px 2px rgba(20, 39, 45, 0.04), 0 4px 16px rgba(20, 39, 45, 0.06);
+  border-bottom-color: rgba(226, 235, 232, 0.95) !important;
+}
+
+/* Custom scrollbar for inner scroll regions */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #c4d6d2;
+  border-radius: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #9bb5b0;
+}
